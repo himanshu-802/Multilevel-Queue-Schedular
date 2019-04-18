@@ -191,7 +191,7 @@ void Queue2()
 
 main()
 {
-	 Queue1();
-     Queue2();
+	 Queue1(); //Round Robin with TimeQuantum 2
+        Queue2(); // Shortetst Remaining Time Scheduling 
 }
 
