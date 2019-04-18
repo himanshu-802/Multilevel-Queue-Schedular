@@ -1,3 +1,5 @@
+//Multilevel Queue Scheduling of Round Robin and SROT
+
 #include<stdio.h>
  typedef struct 
 {
@@ -7,12 +9,9 @@
 }Process;
 void Queue1();
 void Queue2();
-void findWaitingTime(Process proc[], int n, 
-                                int wt[]) 
+void findWaitingTime(Process proc[], int n,int wt[]) 
 { 
     int rt[n]; 
-  
-    // Copy the burst time into rt[] 
     for (int i = 0; i < n; i++) 
         rt[i] = proc[i].bt; 
   
@@ -41,28 +40,16 @@ void findWaitingTime(Process proc[], int n,
             t++; 
             continue; 
         } 
-  
-        // Reduce remaining time by one 
-        rt[shortest]--; 
-  
-        // Update minimum 
+        rt[shortest]--;
         minm = rt[shortest]; 
         if (minm == 0) 
             minm = 100000; 
-  
-        // If a process gets completely 
-        // executed 
+   
         if (rt[shortest] == 0) { 
-  
-            // Increment complete 
             complete++; 
             check = false; 
-  
-            // Find finish time of current 
-            // process 
             finish_time = t + 1; 
-  
-            // Calculate waiting time 
+
             wt[shortest] = finish_time - 
                         proc[shortest].bt - 
                         proc[shortest].art; 
@@ -70,7 +57,6 @@ void findWaitingTime(Process proc[], int n,
             if (wt[shortest] < 0) 
                 wt[shortest] = 0; 
         } 
-        // Increment time 
         t++; 
     } 
 } 
@@ -79,8 +65,6 @@ void findWaitingTime(Process proc[], int n,
 void findTurnAroundTime(Process proc[], int n, 
                         int wt[], int tat[]) 
 { 
-    // calculating turnaround time by adding 
-    // bt[i] + wt[i] 
     for (int i = 0; i < n; i++) 
         tat[i] = proc[i].bt + wt[i]; 
 } 
@@ -90,28 +74,18 @@ void findavgTime(Process proc[], int n)
 { 
     int wt[n], tat[n], total_wt = 0, 
                     total_tat = 0,i; 
-  
-    // Function to find waiting time of all 
-    // processes 
+
     findWaitingTime(proc, n, wt); 
-  
-    // Function to find turn around time for 
-    // all processes 
-    findTurnAroundTime(proc, n, wt, tat); 
-  
-    // Display processes along with all 
-    // details 
+    findTurnAroundTime(proc, n, wt, tat);  
     printf(" Processes\t Burst time\t Waiting time\t  Turn around time\n"); 
   
-    // Calculate total waiting time and 
-    // total turnaround time 
     for ( i = 0; i < n; i++) { 
         total_wt = total_wt + wt[i]; 
         total_tat = total_tat + tat[i]; 
-        printf( "%d\t ", proc[i].pid );
-        printf("%d\t ",proc[i].bt) ;
-		printf("%d\t ",wt[i]); 
-        printf("%d\t ", tat[i]) ; printf("\n"); 
+        printf( " %d        \t ", proc[i].pid );
+        printf(" %d        \t ",proc[i].bt) ;
+		printf(" %d        \t ",wt[i]); 
+        printf(" %d        \t ", tat[i]) ; printf("\n"); 
     } 
   
     printf( "\nAverage waiting time = ");
@@ -121,7 +95,7 @@ void findavgTime(Process proc[], int n)
 } 
 void Queue1()
 {
-	printf("Round Robin Scheduling\n");
+	printf("\nRound Robin Scheduling\n");
 	  int count,j,n,time,remain,flag=0,time_quantum; 
   int wait_time=0,turnaround_time=0,at[10],bt[10],rt[10]; 
   printf("Enter Total Process:\t "); 
@@ -171,7 +145,8 @@ void Queue1()
 }
 void Queue2()
 {
-	printf("Shortest Job first Scheduling\n"); 
+	printf("\nQueue2 :\n");
+	printf("\nShortest Job first Scheduling\n"); 
 	printf("Enter Total Number of Processes:\t"); 
 	int limit,count;
 	scanf("%d", &limit);  
@@ -189,9 +164,21 @@ void Queue2()
 	findavgTime(proc,limit);
 }
 
-main()
+int main()
 {
-	 Queue1(); //Round Robin with TimeQuantum 2
-        Queue2(); // Shortetst Remaining Time Scheduling 
+	int p1,p2;
+	int q1=1,q2=2;
+	printf("Enter the priority of the queue %d\n",q1);
+	scanf("%d",&p1);
+	printf("Enter the priority of the queue %d\n",q2);
+	scanf("%d",&p2);
+	if(p1<p2)
+	{
+	  Queue1();
+	  Queue2();
+	}
+	else if(p1>p2){
+	 Queue2();
+     Queue1();
+	}
 }
-
