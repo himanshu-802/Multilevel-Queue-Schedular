@@ -1,4 +1,4 @@
-//Multilevel Queue Scheduling of Round Robin and SROT
+//Multilevel Queue Scheduling of Round Robin and SROT -> Himanshu Rathore // Copyright Reserved 2019 ///
 
 #include<stdio.h>
  typedef struct 
